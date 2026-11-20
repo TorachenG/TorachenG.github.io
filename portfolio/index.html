@@ -65,12 +65,11 @@ body{background:#181717;color:var(--ink);font-family:'MiSans',system-ui,-apple-s
 @keyframes numIn{0%{opacity:0;transform:translateY(18px) scale(.55) rotate(-8deg)}55%{opacity:1;transform:translateY(-2px) scale(1.12) rotate(2deg)}80%{transform:translateY(1px) scale(.985) rotate(-.6deg)}100%{opacity:1;transform:none}}
 @keyframes titleIn{0%{opacity:0;transform:translateY(14px) scale(.88)}55%{opacity:1;transform:translateY(-2px) scale(1.04)}80%{transform:translateY(1px) scale(.995)}100%{opacity:1;transform:none}}
 @keyframes partIn{0%{opacity:0;transform:translateY(8px) scale(.70)}60%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:none}}
-@keyframes floatY{0%,100%{translate:0 0}50%{translate:0 -6px}}
-.slide.play .glass{animation:glassIn .62s cubic-bezier(.25,.8,.3,1) both,floatY 9s ease-in-out 1.1s infinite;transform-origin:50% 50%}
+.slide.play .glass{animation:glassIn .62s cubic-bezier(.25,.8,.3,1) both;transform-origin:50% 50%}
 .slide.play .glass .sheen{animation:sheenSweep 1.15s cubic-bezier(.35,0,.2,1) .38s both}
-.slide.play .bnum{animation:numIn .66s cubic-bezier(.25,.8,.3,1) .06s both,floatY 9s ease-in-out 1.1s infinite;transform-origin:50% 50%}
-.slide.play .btitle .ln{animation:titleIn .68s cubic-bezier(.25,.8,.3,1) .12s both,floatY 9s ease-in-out 1.1s infinite;transform-origin:50% 60%}
-.slide.play .bpart{animation:partIn .60s cubic-bezier(.25,.8,.3,1) .20s both,floatY 9s ease-in-out 1.1s infinite;transform-origin:50% 50%}
+.slide.play .bnum{animation:numIn .66s cubic-bezier(.25,.8,.3,1) .06s both;transform-origin:50% 50%}
+.slide.play .btitle .ln{animation:titleIn .68s cubic-bezier(.25,.8,.3,1) .12s both;transform-origin:50% 60%}
+.slide.play .bpart{animation:partIn .60s cubic-bezier(.25,.8,.3,1) .20s both;transform-origin:50% 50%}
 /* ---------- chrome ---------- */
 .ui{position:fixed;inset:0;z-index:20;pointer-events:none;transition:opacity .45s ease;font-family:'MiSans Light',MiSans,sans-serif}
 .ui.idle{opacity:0}
