@@ -38,8 +38,8 @@
     <h1 class="reveal" style="--i:1">写一篇新文章</h1>
   </section>
 
-  <div class="editor no-preview" id="editorShell">
-    <aside class="editor-preview" id="previewPane" hidden>
+  <div class="editor" id="editorShell">
+    <aside class="editor-preview" id="previewPane">
       <p class="kicker">预览</p>
       <article class="post-card preview-card">
         <div class="pc-link">
@@ -53,13 +53,13 @@
     </aside>
 
     <form class="editor-form glass" id="postForm" autocomplete="off">
-      <div class="field-row">
-        <div class="field"><label for="fTitle">标题</label><input id="fTitle" placeholder="文章标题"></div>
-        <div class="field"><label for="fDate">日期</label><input id="fDate" type="date"></div>
+      <div class="field">
+        <label for="fTitle">标题</label>
+        <input id="fTitle" placeholder="文章标题">
       </div>
       <div class="field-row">
+        <div class="field"><label for="fDate">日期</label><input id="fDate" type="date"></div>
         <div class="field"><label for="fTags">标签</label><input id="fTags" placeholder="用逗号分隔"></div>
-        <div class="field"><label for="fExcerpt">摘要</label><input id="fExcerpt" placeholder="一句话概括"></div>
       </div>
 
       <div class="toolbar" id="toolbar">
@@ -91,10 +91,16 @@
            data-placeholder="从这里开始写…"></div>
 
       <div class="editor-actions">
-        <button type="button" class="btn" id="btnPreview" aria-pressed="false">显示预览</button>
-        <button type="button" class="btn ghost" id="btnDownload">导出</button>
-        <button type="button" class="btn ghost" id="btnCopy">复制</button>
-        <button type="button" class="btn ghost" id="btnClear">清空</button>
+        <button type="button" class="btn ghost" id="btnPreview" aria-pressed="true">隐藏预览</button>
+        <span class="spacer"></span>
+        <div class="dropdown" id="exportDrop">
+          <button type="button" class="btn ghost" id="btnExport" aria-haspopup="true" aria-expanded="false">导出 <span class="caret">▾</span></button>
+          <div class="menu" role="menu">
+            <button type="button" data-act="copy" role="menuitem">复制 Markdown</button>
+            <button type="button" data-act="download" role="menuitem">下载 .md</button>
+          </div>
+        </div>
+        <button type="button" class="btn accent" id="btnPublish">确定发布</button>
         <span class="status" id="status"></span>
       </div>
     </form>
@@ -126,6 +132,20 @@
       <div class="imgmodal-actions">
         <button type="button" class="btn" id="btnInsertUrl">插入</button>
         <button type="button" class="btn ghost" id="btnCancelUrl">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="imgmodal" id="pubModal" hidden>
+    <div class="imgmodal-card glass">
+      <p class="kicker">发布到 GitHub</p>
+      <p class="pub-note">Token 只保存在这台设备的浏览器里，用于提交文章文件；提交后由 GitHub Actions 自动重新构建。</p>
+      <div class="field"><label for="pubRepo">仓库</label><input id="pubRepo" placeholder="owner/repo"></div>
+      <div class="field"><label for="pubBranch">分支</label><input id="pubBranch" placeholder="main"></div>
+      <div class="field"><label for="pubToken">访问令牌</label><input id="pubToken" type="password" placeholder="ghp_… / github_pat_…"></div>
+      <div class="imgmodal-actions">
+        <button type="button" class="btn accent" id="btnPubGo">发布</button>
+        <button type="button" class="btn ghost" id="btnPubCancel">取消</button>
       </div>
     </div>
   </div>
