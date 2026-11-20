@@ -6,19 +6,27 @@
   /* ---------- theme ---------- */
   var themeBtn = doc.getElementById('themeToggle');
   var meta = doc.querySelector('meta[name="theme-color"]');
-  function paintTheme(t) {
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  var hasStored = false;
+  try { hasStored = !!localStorage.getItem('theme'); } catch (e) {}
+  function paintTheme(t, store) {
     html.dataset.theme = t;
-    try { localStorage.setItem('theme', t); } catch (e) {}
+    if (store) { try { localStorage.setItem('theme', t); hasStored = true; } catch (e) {} }
     if (meta) meta.setAttribute('content', t === 'light' ? '#eef0f6' : '#07080b');
+  }
+  if (mq && mq.addEventListener) {
+    mq.addEventListener('change', function (e) {
+      if (!hasStored) paintTheme(e.matches ? 'light' : 'dark', false);
+    });
   }
   if (themeBtn) {
     themeBtn.addEventListener('click', function () {
       var next = html.dataset.theme === 'dark' ? 'light' : 'dark';
-      paintTheme(next);
+      paintTheme(next, true);
     });
   }
   var qTheme = new URLSearchParams(location.search).get('theme');
-  paintTheme(qTheme === 'light' || qTheme === 'dark' ? qTheme : (html.dataset.theme || 'dark'));
+  paintTheme(qTheme === 'light' || qTheme === 'dark' ? qTheme : (html.dataset.theme || 'dark'), false);
 
   /* ---------- platform hint ---------- */
   (function () {

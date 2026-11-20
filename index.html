@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -12,7 +12,7 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/pygments.css">
-<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>try{var t=localStorage.getItem('theme');if(!t){t=(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='dark';}</script>
 
 </head>
 <body class="">
@@ -41,9 +41,7 @@
     <div class="actions">
       <a class="action-card reveal" style="--i:3" href="https://toracheng.github.io/Mote">
         <span class="ac-glow" aria-hidden="true"></span>
-        <span class="ac-icon">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9Z"/></svg>
-        </span>
+        <span class="ac-icon mote"><img src="/assets/mote-icon.png" alt="Mote 图标" width="30" height="30"></span>
         <span class="ac-body"><b>Mote 浏览器</b><i>纯净如纸，强大如城</i></span>
         <span class="ac-arrow">↗</span>
       </a>
@@ -88,6 +86,14 @@
     <div class="pc-foot"><div class="pc-tags"><span class="tag static">前端</span><span class="tag static">设计还原</span><span class="tag static">作品集</span></div><span class="pc-arrow" aria-hidden="true">↗</span></div>
   </a>
 </article>
+<article class="post-card reveal" data-slug="mote-design-notes" data-tags="产品设计,浏览器,Mote" style="--i:3">
+  <a class="pc-link" href="/blog/mote-design-notes/">
+    <div class="pc-meta"><time datetime="2026-11-12">2026.11.12</time><span class="dot"></span><span>1 分钟</span></div>
+    <h3 class="pc-title">Mote 浏览器：在「简洁」和「功能」之间</h3>
+    <p class="pc-excerpt">一个 AI 浏览器该长什么样？我把 Mote 的设计分成三层：安静的界面、随时可达的 AI、以及不打扰人的细节。</p>
+    <div class="pc-foot"><div class="pc-tags"><span class="tag static">产品设计</span><span class="tag static">浏览器</span><span class="tag static">Mote</span></div><span class="pc-arrow" aria-hidden="true">↗</span></div>
+  </a>
+</article>
     </div>
   </section>
 
@@ -101,15 +107,20 @@
   <section class="section about" id="about">
     <div class="about-card reveal">
       <div class="about-text">
-        <p class="kicker">ABOUT</p>
-        <h2>设计 × 代码，长期主义者。</h2>
-        <p>我做 Android 浏览器与界面设计，喜欢把模糊的感觉拆成可复用的规则：网格、字距、阴影、缓动。这个博客是工作台，也是草稿纸。</p>
-        <div class="socials">
-          <a class="btn" href="https://toracheng.github.io/Mote">Mote 官网</a>
-          <a class="btn ghost" href="/portfolio/">看作品集</a>
+        <p class="kicker">ABOUT US</p>
+        <h2>兴趣使然的 Furry 控</h2>
+        <div class="bio">
+          <p>美术学油画系本科毕业，目前是平凡的设计类岗社畜。平时喜欢设计一些小玩意儿，偶尔接单绘画。</p>
+          <p>当前坐标湖南省长沙市。爱好外出旅游（尤其是自然风景）、与列表面基、健身锻炼、胡吃海喝、看沙雕爽文短剧...</p>
+          <p class="impress">同学对我的第一印象：高冷壮汉 💪<br>与同学相互熟络之后：抽象傻福 🧠</p>
+          <p>希望你能喜欢我的作品~</p>
         </div>
       </div>
-      <div class="about-orb" aria-hidden="true"><span></span></div>
+      <div class="about-avatar">
+        <img src="https://q1.qlogo.cn/g?b=qq&amp;nk=2757004736&amp;s=640" alt="QQ 头像"
+             width="640" height="640" loading="lazy" referrerpolicy="no-referrer"
+             onerror="this.onerror=null;this.src='/assets/avatar-fallback.jpg'">
+      </div>
     </div>
   </section>
 </main>
