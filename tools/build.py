@@ -127,7 +127,7 @@ def page(title, body, path_prefix="", extra_head="", body_class=""):
   <div class="footer-inner">
     <div class="f-brand">TORACHEN</div>
     <div class="f-links">
-      <a href="/blog/">文章</a><a href="/portfolio/">作品集</a><a href="{MOTE_URL}">Mote</a><a href="https://github.com/TorachenG" target="_blank" rel="noopener">GitHub</a><a href="https://space.bilibili.com/163472233" target="_blank" rel="noopener">哔哩哔哩</a>
+      <a href="/blog/">文章</a><a href="/portfolio/">作品集</a><a href="{MOTE_URL}">Mote</a>
     </div>
     <div class="f-copy">© {datetime.now().year} Torachen</div>
   </div>
@@ -143,14 +143,6 @@ NAV = """<header class="island" id="island">
     <a href="/">首页</a>
     <a href="/blog/">文章</a>
     <a href="/#about">关于</a>
-    <span class="nav-social">
-      <a class="icon-btn" href="https://github.com/TorachenG" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
-        <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>
-      </a>
-      <a class="icon-btn" href="https://space.bilibili.com/163472233" target="_blank" rel="noopener" aria-label="哔哩哔哩" title="哔哩哔哩">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3.5"/><path d="M7 3l3 4M17 3l-3 4"/><path d="M9 12v3M15 12v3"/></svg>
-      </a>
-    </span>
   </nav>
   <button class="theme" id="themeToggle" type="button" aria-label="切换深浅色">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path class="sun" d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66 1.42-1.42M4.92 19.08l1.42-1.42m0-11.32L4.92 4.92m14.16 14.16-1.42-1.42" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle class="sun" cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7" fill="none"/><path class="moon" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/></svg>
@@ -194,6 +186,22 @@ def build_home(posts):
           <svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M8 13h8M8 16.5h5"/></svg>
         </span>
         <span class="ac-body"><b>作品集</b><i>UI/UX · 平面视觉 · 手绘油画</i></span>
+        <span class="ac-arrow">↗</span>
+      </a>
+      <a class="action-card reveal" style="--i:5" href="https://github.com/TorachenG" target="_blank" rel="noopener">
+        <span class="ac-glow" aria-hidden="true"></span>
+        <span class="ac-icon github">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>
+        </span>
+        <span class="ac-body"><b>GitHub</b><i>代码仓库与开源项目</i></span>
+        <span class="ac-arrow">↗</span>
+      </a>
+      <a class="action-card reveal" style="--i:6" href="https://space.bilibili.com/163472233" target="_blank" rel="noopener">
+        <span class="ac-glow" aria-hidden="true"></span>
+        <span class="ac-icon bilibili">
+          <svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3.5"/><path d="M7 3l3 4M17 3l-3 4"/><path d="M9 12v3M15 12v3"/></svg>
+        </span>
+        <span class="ac-body"><b>哔哩哔哩</b><i>视频与日常</i></span>
         <span class="ac-arrow">↗</span>
       </a>
     </div>
