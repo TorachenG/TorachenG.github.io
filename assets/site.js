@@ -24,6 +24,12 @@
   var qTheme = new URLSearchParams(location.search).get('theme');
   paintTheme(qTheme === 'light' || qTheme === 'dark' ? qTheme : (html.dataset.theme || 'dark'));
 
+  /* ---------- platform hint ---------- */
+  (function () {
+    var kbd = doc.querySelector('.search-wrap kbd');
+    if (kbd && !/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) kbd.textContent = 'Ctrl K';
+  })();
+
   /* ---------- active nav ---------- */
   (function () {
     var path = location.pathname;
