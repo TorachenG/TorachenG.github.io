@@ -136,7 +136,7 @@ def page(title, body, path_prefix="", extra_head="", body_class=""):
 
 
 NAV = """<header class="island" id="island">
-  <a class="brand" href="/" aria-label="返回首页"><span class="brand-dot"></span><b>Torachen</b></a>
+  <a class="brand" href="/" aria-label="返回首页"><b>Torachen</b></a>
   <nav class="links" aria-label="主导航">
     <a href="/">首页</a>
     <a href="/blog/">文章</a>
