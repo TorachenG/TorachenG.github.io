@@ -38,6 +38,8 @@
     if (!t) return '';
     return t.length > 110 ? t.slice(0, 110).trim() + '…' : t;
   }
+  function openModal(el) { el.classList.add('open'); }
+  function closeModal(el) { el.classList.remove('open'); }
   function flash(msg, err) {
     status.textContent = msg;
     status.className = 'status show' + (err ? ' err' : '');
@@ -154,21 +156,21 @@
 
   $('btnImage').addEventListener('click', function () {
     imgUrl.value = '';
-    imgModal.hidden = false;
+    openModal(imgModal);
     setTimeout(function () { imgUrl.focus(); }, 30);
   });
-  $('btnCancelUrl').addEventListener('click', function () { imgModal.hidden = true; });
+  $('btnCancelUrl').addEventListener('click', function () { closeModal(imgModal); });
   $('btnInsertUrl').addEventListener('click', function () {
     var u = imgUrl.value.trim();
     if (!u) { flash('请填写图片地址', true); return; }
-    imgModal.hidden = true;
+    closeModal(imgModal);
     insertFigure(u, '');
   });
   imgUrl.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') { e.preventDefault(); $('btnInsertUrl').click(); }
   });
   $('btnPickFile').addEventListener('click', function () { imgFile.click(); });
-  imgModal.addEventListener('click', function (e) { if (e.target === imgModal) imgModal.hidden = true; });
+  imgModal.addEventListener('click', function (e) { if (e.target === imgModal) closeModal(imgModal); });
 
   imgFile.addEventListener('change', function () {
     var file = imgFile.files && imgFile.files[0];
@@ -184,7 +186,7 @@
         canvas.height = Math.round(img.height * scale);
         canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
         var type = /png/i.test(file.type) ? 'image/png' : 'image/jpeg';
-        imgModal.hidden = true;
+        closeModal(imgModal);
         insertFigure(canvas.toDataURL(type, 0.86), '');
         flash('图片已插入');
       };
@@ -352,11 +354,11 @@
     pubRepo.value = cfg.repo || 'TorachenG/TorachenG.github.io';
     pubBranch.value = cfg.branch || 'main';
     pubToken.value = cfg.token || '';
-    pubModal.hidden = false;
+    openModal(pubModal);
     setTimeout(function () { (pubToken.value ? pubRepo : pubToken).focus(); }, 30);
   }
-  $('btnPubCancel').addEventListener('click', function () { pubModal.hidden = true; });
-  pubModal.addEventListener('click', function (e) { if (e.target === pubModal) pubModal.hidden = true; });
+  $('btnPubCancel').addEventListener('click', function () { closeModal(pubModal); });
+  pubModal.addEventListener('click', function (e) { if (e.target === pubModal) closeModal(pubModal); });
 
   function toBase64(str) {
     var bytes = new TextEncoder().encode(str);
@@ -406,7 +408,7 @@
         var err = await res.json().catch(function () { return {}; });
         throw new Error(err.message || ('HTTP ' + res.status));
       }
-      pubModal.hidden = true;
+      closeModal(pubModal);
       flash('已提交，约 1–2 分钟后自动上线');
     } catch (e) {
       flash('发布失败：' + e.message, true);
@@ -460,7 +462,7 @@
   $('btnClear') && $('btnClear').addEventListener('click', function () {});
   addEventListener('keydown', function (e) {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') { e.preventDefault(); download(); }
-    if (e.key === 'Escape') { imgModal.hidden = true; pubModal.hidden = true; selectFig(null); }
+    if (e.key === 'Escape') { closeModal(imgModal); closeModal(pubModal); selectFig(null); }
   });
 
   setPreview(false);
