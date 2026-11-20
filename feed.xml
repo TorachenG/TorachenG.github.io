@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+  <title>TorachenG</title>
+  <link>https://toracheng.github.io/</link>
+  <description>浏览器、界面与手绘。记录产品设计、工程实践与反复打磨的细节。</description>
+  <language>zh-CN</language>
+  <item>
+    <title>这个博客是怎么搭的：Markdown、构建脚本与一次 push</title>
+    <link>https://toracheng.github.io/blog/building-this-blog/</link>
+    <guid isPermaLink="true">https://toracheng.github.io/blog/building-this-blog/</guid>
+    <pubDate>Sat, 21 Nov 2026 09:00:00 +0000</pubDate>
+    <description>没有数据库、没有后台、没有框架。四个静态文件加一个 300 行的生成器，就是现在这个站点。</description>
+  </item>
+  <item>
+    <title>Liquid Glass 之后：网页里怎么做出「灵动」</title>
+    <link>https://toracheng.github.io/blog/liquid-glass-notes/</link>
+    <guid isPermaLink="true">https://toracheng.github.io/blog/liquid-glass-notes/</guid>
+    <pubDate>Fri, 20 Nov 2026 09:00:00 +0000</pubDate>
+    <description>玻璃材质只是表皮，真正让人觉得「灵动」的是三件事：分层的入场、带过冲的曲线、以及随手指走的微光。</description>
+  </item>
+  <item>
+    <title>把 PPT 复刻成网页：像素级还原的七个细节</title>
+    <link>https://toracheng.github.io/blog/portfolio-to-web/</link>
+    <guid isPermaLink="true">https://toracheng.github.io/blog/portfolio-to-web/</guid>
+    <pubDate>Wed, 18 Nov 2026 09:00:00 +0000</pubDate>
+    <description>把 10 页 PPT 重做成可滚动的网页，最终与 PowerPoint 导出图逐像素误差 3.9/255。过程里踩到的坑，比想象中多。</description>
+  </item>
+  <item>
+    <title>Mote 浏览器：在「简洁」和「功能」之间</title>
+    <link>https://toracheng.github.io/blog/mote-design-notes/</link>
+    <guid isPermaLink="true">https://toracheng.github.io/blog/mote-design-notes/</guid>
+    <pubDate>Thu, 12 Nov 2026 09:00:00 +0000</pubDate>
+    <description>一个 AI 浏览器该长什么样？我把 Mote 的设计分成三层：安静的界面、随时可达的 AI、以及不打扰人的细节。</description>
+  </item>
+</channel></rss>

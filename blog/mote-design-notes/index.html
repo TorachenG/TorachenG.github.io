@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mote 浏览器：在「简洁」和「功能」之间 · TorachenG</title>
+<meta name="description" content="浏览器、界面与手绘。记录产品设计、工程实践与反复打磨的细节。">
+<meta name="theme-color" content="#07080b">
+<meta property="og:title" content="Mote 浏览器：在「简洁」和「功能」之间 · TorachenG">
+<meta property="og:description" content="浏览器、界面与手绘。记录产品设计、工程实践与反复打磨的细节。">
+<meta property="og:type" content="website">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/pygments.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<meta property="og:type" content="article">
+</head>
+<body class="">
+<div class="site-bg" aria-hidden="true">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <span class="grain"></span>
+</div>
+<header class="island" id="island">
+  <a class="brand" href="/" aria-label="返回首页"><span class="brand-dot"></span><b>TorachenG</b></a>
+  <nav class="links" aria-label="主导航">
+    <a href="/">首页</a>
+    <a href="/blog/">文章</a>
+    <a href="/portfolio/">作品集</a>
+    <a href="#about">关于</a>
+  </nav>
+  <button class="theme" id="themeToggle" type="button" aria-label="切换深浅色">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path class="sun" d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66 1.42-1.42M4.92 19.08l1.42-1.42m0-11.32L4.92 4.92m14.16 14.16-1.42-1.42" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle class="sun" cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7" fill="none"/><path class="moon" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/></svg>
+  </button>
+</header>
+
+<div class="progress" id="progress"></div>
+<main class="article-wrap">
+  <article class="article">
+    <header class="article-head">
+      <a class="back" href="/blog/">← 返回文章列表</a>
+      <h1>Mote 浏览器：在「简洁」和「功能」之间</h1>
+      <div class="meta"><time datetime="2026-11-12">2026.11.12</time><span class="dot"></span><span>1 分钟阅读</span><span class="dot"></span><a class="tag" href="/blog/?tag=产品设计">产品设计</a><a class="tag" href="/blog/?tag=浏览器">浏览器</a><a class="tag" href="/blog/?tag=Mote">Mote</a></div>
+    </header>
+    <div class="article-body">
+      <div class="prose"><p>做 Mote 的第一天，我给自己写了两句话：<strong>纯净如纸，强大如城</strong>。</p>
+<p>纸是界面，城是能力。大部分浏览器的问题不是功能不够，而是功能都挤在脸上——地址栏、书签、资讯流、广告，每一块都在争夺注意力。Mote 想做的是反过来：默认什么都没有，需要的时候才出现。</p>
+<h2 id="_1">三层结构</h2>
+<p>我把整个产品拆成三层，每一层只负责一件事：</p>
+<ol>
+<li><strong>界面层</strong>：只保留地址栏、页面和底部工具栏，其余全部收进「更多」。</li>
+<li><strong>能力层</strong>：AI Agent 常驻但不显眼，用一次点击唤起，而不是用一个入口堆在首页。</li>
+<li><strong>表达层</strong>：动效、圆角、留白，负责让上面两层显得「轻」。</li>
+</ol>
+<blockquote>
+<p>设计不是把所有功能做出来，而是决定哪些功能不出现在第一屏。</p>
+</blockquote>
+<h2 id="_2">关于「不用等」的细节</h2>
+<p>浏览器是效率工具，任何超过 200ms 的等待都会被感知。我们把加载过程拆成了三段可见反馈：</p>
+<ul>
+<li>地址栏左侧的进度条只做一件事：告诉你在动</li>
+<li>页面骨架先于内容出现，减少跳变</li>
+<li>AI 的回答流式输出，第一个字必须在 400ms 内出现</li>
+</ul>
+<h2 id="_3">一些实现上的取舍</h2>
+<p>界面用 Compose 写，圆角和阴影都收敛到一套 token 里，避免每个页面各写一套：</p>
+<div class="hl"><pre><span></span><code><span class="kd">object</span><span class="w"> </span><span class="nc">MoteShape</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">card</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RoundedCornerShape</span><span class="p">(</span><span class="m">20.</span><span class="n">dp</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">sheet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RoundedCornerShape</span><span class="p">(</span><span class="n">topStart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">28.</span><span class="n">dp</span><span class="p">,</span><span class="w"> </span><span class="n">topEnd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">28.</span><span class="n">dp</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">pill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RoundedCornerShape</span><span class="p">(</span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">50</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>颜色同样如此。主题只有一层，深色和浅色共用同一套语义名：</p>
+<div class="hl"><pre><span></span><code><span class="p">:</span><span class="nd">root</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">--surface</span><span class="p">:</span><span class="w"> </span><span class="mh">#121316</span><span class="p">;</span><span class="w"> </span><span class="nv">--text</span><span class="p">:</span><span class="w"> </span><span class="mh">#f5f6f8</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="o">[</span><span class="nt">data-theme</span><span class="o">=</span><span class="s2">"light"</span><span class="o">]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">--surface</span><span class="p">:</span><span class="w"> </span><span class="mh">#ffffff</span><span class="p">;</span><span class="w"> </span><span class="nv">--text</span><span class="p">:</span><span class="w"> </span><span class="mh">#0c0d10</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<h2 id="_4">还没做完的事</h2>
+<ul>
+<li>标签页的收纳与分组</li>
+<li>阅读模式的排版规则</li>
+<li>多端同步的冲突合并</li>
+</ul>
+<p>Mote 现在还在早期，官网是 <a href="https://toracheng.github.io/Mote">toracheng.github.io/Mote</a>。如果你也在做浏览器，欢迎来聊。</p></div>
+      <aside class="toc"><p class="toc-title">目录</p><div class="toc">
+<ul>
+<li><a href="#_1">三层结构</a></li>
+<li><a href="#_2">关于「不用等」的细节</a></li>
+<li><a href="#_3">一些实现上的取舍</a></li>
+<li><a href="#_4">还没做完的事</a></li>
+</ul>
+</div>
+</aside>
+    </div>
+    <nav class="pager"><span></span><a class="pager-link next" href="/blog/portfolio-to-web/"><span>下一篇 →</span><b>把 PPT 复刻成网页：像素级还原的七个细节</b></a></nav>
+  </article>
+</main>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="f-brand">TORACHENG<span>·</span>记录设计、代码与手绘</div>
+    <div class="f-links">
+      <a href="/blog/">文章</a><a href="/portfolio/">作品集</a><a href="https://toracheng.github.io/Mote">Mote</a><a href="/feed.xml">RSS</a>
+    </div>
+    <div class="f-copy">© 2026 TorachenG · 保持好奇，持续打磨</div>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

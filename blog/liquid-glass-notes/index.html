@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Liquid Glass 之后：网页里怎么做出「灵动」 · TorachenG</title>
+<meta name="description" content="浏览器、界面与手绘。记录产品设计、工程实践与反复打磨的细节。">
+<meta name="theme-color" content="#07080b">
+<meta property="og:title" content="Liquid Glass 之后：网页里怎么做出「灵动」 · TorachenG">
+<meta property="og:description" content="浏览器、界面与手绘。记录产品设计、工程实践与反复打磨的细节。">
+<meta property="og:type" content="website">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/pygments.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<meta property="og:type" content="article">
+</head>
+<body class="">
+<div class="site-bg" aria-hidden="true">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <span class="grain"></span>
+</div>
+<header class="island" id="island">
+  <a class="brand" href="/" aria-label="返回首页"><span class="brand-dot"></span><b>TorachenG</b></a>
+  <nav class="links" aria-label="主导航">
+    <a href="/">首页</a>
+    <a href="/blog/">文章</a>
+    <a href="/portfolio/">作品集</a>
+    <a href="#about">关于</a>
+  </nav>
+  <button class="theme" id="themeToggle" type="button" aria-label="切换深浅色">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path class="sun" d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66 1.42-1.42M4.92 19.08l1.42-1.42m0-11.32L4.92 4.92m14.16 14.16-1.42-1.42" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle class="sun" cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7" fill="none"/><path class="moon" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/></svg>
+  </button>
+</header>
+
+<div class="progress" id="progress"></div>
+<main class="article-wrap">
+  <article class="article">
+    <header class="article-head">
+      <a class="back" href="/blog/">← 返回文章列表</a>
+      <h1>Liquid Glass 之后：网页里怎么做出「灵动」</h1>
+      <div class="meta"><time datetime="2026-11-20">2026.11.20</time><span class="dot"></span><span>2 分钟阅读</span><span class="dot"></span><a class="tag" href="/blog/?tag=设计">设计</a><a class="tag" href="/blog/?tag=动效">动效</a><a class="tag" href="/blog/?tag=CSS">CSS</a></div>
+    </header>
+    <div class="article-body">
+      <div class="prose"><p>iOS 26 的 Liquid Glass 出来之后，「玻璃」几乎成了所有界面的默认材质。但照抄模糊和半透明，通常只会得到一个脏兮兮的毛玻璃。</p>
+<p>我把「灵动」拆成三个可执行的部分：<strong>材质、节奏、反馈</strong>。</p>
+<h2 id="_1">一、材质：三层，而不是一层</h2>
+<p>一块好看的玻璃至少有三层：</p>
+<ol>
+<li><strong>底色</strong>：一层很淡的白色渐变，负责明度</li>
+<li><strong>模糊</strong>：<code>backdrop-filter: blur(30px) saturate(180%)</code>，负责透出背后的颜色</li>
+<li><strong>高光边</strong>：用渐变 + mask 做出 1px 的镜面边，负责「玻璃感」</li>
+</ol>
+<div class="hl"><pre><span></span><code><span class="p">.</span><span class="nc">glass</span><span class="p">::</span><span class="nd">before</span><span class="p">{</span>
+<span class="w">  </span><span class="k">content</span><span class="p">:</span><span class="s2">""</span><span class="p">;</span><span class="k">position</span><span class="p">:</span><span class="kc">absolute</span><span class="p">;</span><span class="k">inset</span><span class="p">:</span><span class="mi">0</span><span class="p">;</span><span class="k">border-radius</span><span class="p">:</span><span class="kc">inherit</span><span class="p">;</span><span class="k">padding</span><span class="p">:</span><span class="mi">1</span><span class="kt">px</span><span class="p">;</span>
+<span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="nb">linear-gradient</span><span class="p">(</span><span class="mi">160</span><span class="kt">deg</span><span class="p">,</span><span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mf">.55</span><span class="p">),</span><span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mf">.06</span><span class="p">)</span><span class="w"> </span><span class="mi">38</span><span class="kt">%</span><span class="p">,</span><span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mf">.02</span><span class="p">)</span><span class="w"> </span><span class="mi">62</span><span class="kt">%</span><span class="p">,</span><span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mf">.3</span><span class="p">));</span>
+<span class="w">  </span><span class="kp">-webkit-</span><span class="k">mask</span><span class="p">:</span><span class="nb">linear-gradient</span><span class="p">(</span><span class="mh">#000</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="kc">content-box</span><span class="p">,</span><span class="nb">linear-gradient</span><span class="p">(</span><span class="mh">#000</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">  </span><span class="kp">-webkit-</span><span class="k">mask-composite</span><span class="p">:</span><span class="n">xor</span><span class="p">;</span>
+<span class="w">  </span><span class="k">mask-composite</span><span class="p">:</span><span class="n">exclude</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>没有那一圈高光边，玻璃会立刻退化成「半透明色块」。</p>
+<h2 id="_2">二、节奏：弹簧不是「缓动得更慢」</h2>
+<p>系统的动效之所以舒服，是因为它有<strong>过冲</strong>。线性或 ease-out 永远不会给你「弹一下」的感觉。</p>
+<p>我常用两条曲线：</p>
+<div class="hl"><pre><span></span><code><span class="p">:</span><span class="nd">root</span><span class="p">{</span>
+<span class="w">  </span><span class="nv">--spring</span><span class="p">:</span><span class="w"> </span><span class="nb">cubic-bezier</span><span class="p">(</span><span class="mf">.34</span><span class="p">,</span><span class="mf">1.56</span><span class="p">,</span><span class="mf">.64</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w">      </span><span class="c">/* 有回弹，适合按压、弹入 */</span>
+<span class="w">  </span><span class="nv">--spring-soft</span><span class="p">:</span><span class="w"> </span><span class="nb">cubic-bezier</span><span class="p">(</span><span class="mf">.22</span><span class="p">,</span><span class="mf">.9</span><span class="p">,</span><span class="mf">.24</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w">   </span><span class="c">/* 无回弹，适合大块位移 */</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>如果要做明显的过冲，直接写关键帧更可控：</p>
+<div class="hl"><pre><span></span><code><span class="p">@</span><span class="k">keyframes</span><span class="w"> </span><span class="nt">pop</span><span class="p">{</span>
+<span class="w">  </span><span class="nt">0</span><span class="o">%</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">opacity</span><span class="p">:</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">24</span><span class="kt">px</span><span class="p">)</span><span class="w"> </span><span class="nb">scale</span><span class="p">(</span><span class="mf">.90</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="nt">55</span><span class="o">%</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">opacity</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">-3</span><span class="kt">px</span><span class="p">)</span><span class="w"> </span><span class="nb">scale</span><span class="p">(</span><span class="mf">1.02</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="nt">78</span><span class="o">%</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="nb">translateY</span><span class="p">(</span><span class="mi">1</span><span class="kt">px</span><span class="p">)</span><span class="w"> </span><span class="nb">scale</span><span class="p">(</span><span class="mf">.997</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="nt">100</span><span class="o">%</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">opacity</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="k">transform</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>观察真实控件会发现：<strong>过冲量很小</strong>。放大 2% 就够，超过 5% 就会显得廉价。</p>
+<h2 id="_3">三、反馈：让界面「跟着手」</h2>
+<p>最后是反馈。静态的玻璃再漂亮也不会动，加一点随指针移动的高光，立刻就有生命：</p>
+<div class="hl"><pre><span></span><code><span class="nx">card</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'pointermove'</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">card</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+<span class="w">  </span><span class="nx">card</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">setProperty</span><span class="p">(</span><span class="s1">'--mx'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">clientX</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">left</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">'px'</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">card</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">setProperty</span><span class="p">(</span><span class="s1">'--my'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">clientY</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">top</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">'px'</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<div class="hl"><pre><span></span><code><span class="p">.</span><span class="nc">card</span><span class="p">::</span><span class="nd">after</span><span class="p">{</span>
+<span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nb">radial-gradient</span><span class="p">(</span><span class="mi">320</span><span class="kt">px</span><span class="w"> </span><span class="kc">circle</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--mx</span><span class="p">)</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--my</span><span class="p">),</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mf">.22</span><span class="p">),</span><span class="w"> </span><span class="kc">transparent</span><span class="w"> </span><span class="mi">70</span><span class="kt">%</span><span class="p">);</span>
+<span class="w">  </span><span class="k">opacity</span><span class="p">:</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="k">transition</span><span class="p">:</span><span class="k">opacity</span><span class="w"> </span><span class="mf">.4</span><span class="kt">s</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">card</span><span class="p">:</span><span class="nd">hover</span><span class="p">::</span><span class="nd">after</span><span class="p">{</span><span class="w"> </span><span class="k">opacity</span><span class="p">:</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<h2 id="_4">四、别过头</h2>
+<p>三个容易翻车的地方：</p>
+<ul>
+<li><strong>模糊层太多</strong>：每多一层 <code>backdrop-filter</code> 就多一次离屏合成，移动端会掉帧。控制在 3 层以内。</li>
+<li><strong>所有东西都在动</strong>：入场动画只给首屏和关键卡片，滚动到视口外的内容不要再动。</li>
+<li><strong>忽略 reduced-motion</strong>：系统开了减弱动效，就把位移和缩放全关掉，只保留透明度。</li>
+</ul>
+<p>这套规则我在这个站点和 <a href="/portfolio/">作品集</a> 里都用了，可以对照着看。</p></div>
+      <aside class="toc"><p class="toc-title">目录</p><div class="toc">
+<ul>
+<li><a href="#_1">一、材质：三层，而不是一层</a></li>
+<li><a href="#_2">二、节奏：弹簧不是「缓动得更慢」</a></li>
+<li><a href="#_3">三、反馈：让界面「跟着手」</a></li>
+<li><a href="#_4">四、别过头</a></li>
+</ul>
+</div>
+</aside>
+    </div>
+    <nav class="pager"><a class="pager-link prev" href="/blog/portfolio-to-web/"><span>← 上一篇</span><b>把 PPT 复刻成网页：像素级还原的七个细节</b></a><a class="pager-link next" href="/blog/building-this-blog/"><span>下一篇 →</span><b>这个博客是怎么搭的：Markdown、构建脚本与一次 push</b></a></nav>
+  </article>
+</main>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="f-brand">TORACHENG<span>·</span>记录设计、代码与手绘</div>
+    <div class="f-links">
+      <a href="/blog/">文章</a><a href="/portfolio/">作品集</a><a href="https://toracheng.github.io/Mote">Mote</a><a href="/feed.xml">RSS</a>
+    </div>
+    <div class="f-copy">© 2026 TorachenG · 保持好奇，持续打磨</div>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

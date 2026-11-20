@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>把 PPT 复刻成网页：像素级还原的七个细节 · TorachenG</title>
+<meta name="description" content="浏览器、界面与手绘。记录产品设计、工程实践与反复打磨的细节。">
+<meta name="theme-color" content="#07080b">
+<meta property="og:title" content="把 PPT 复刻成网页：像素级还原的七个细节 · TorachenG">
+<meta property="og:description" content="浏览器、界面与手绘。记录产品设计、工程实践与反复打磨的细节。">
+<meta property="og:type" content="website">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/pygments.css">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<meta property="og:type" content="article">
+</head>
+<body class="">
+<div class="site-bg" aria-hidden="true">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <span class="grain"></span>
+</div>
+<header class="island" id="island">
+  <a class="brand" href="/" aria-label="返回首页"><span class="brand-dot"></span><b>TorachenG</b></a>
+  <nav class="links" aria-label="主导航">
+    <a href="/">首页</a>
+    <a href="/blog/">文章</a>
+    <a href="/portfolio/">作品集</a>
+    <a href="#about">关于</a>
+  </nav>
+  <button class="theme" id="themeToggle" type="button" aria-label="切换深浅色">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path class="sun" d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66 1.42-1.42M4.92 19.08l1.42-1.42m0-11.32L4.92 4.92m14.16 14.16-1.42-1.42" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle class="sun" cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7" fill="none"/><path class="moon" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/></svg>
+  </button>
+</header>
+
+<div class="progress" id="progress"></div>
+<main class="article-wrap">
+  <article class="article">
+    <header class="article-head">
+      <a class="back" href="/blog/">← 返回文章列表</a>
+      <h1>把 PPT 复刻成网页：像素级还原的七个细节</h1>
+      <div class="meta"><time datetime="2026-11-18">2026.11.18</time><span class="dot"></span><span>2 分钟阅读</span><span class="dot"></span><a class="tag" href="/blog/?tag=前端">前端</a><a class="tag" href="/blog/?tag=设计还原">设计还原</a><a class="tag" href="/blog/?tag=作品集">作品集</a></div>
+    </header>
+    <div class="article-body">
+      <div class="prose"><p>起因很简单：作品集是 PPT，但我想在网页上看它。</p>
+<p>一开始想直接导图片，后来放弃——那样没有文字选中、没有响应式、也谈不上「网页」。于是决定真做一次还原：读 PPTX 的 XML，按原始坐标重建 DOM。</p>
+<h2 id="_1">一、先搞清楚单位</h2>
+<p>PowerPoint 的坐标是 EMU（English Metric Unit），1 英寸 = 914400 EMU。网页按 96dpi 算，于是：</p>
+<div class="hl"><pre><span></span><code><span class="n">EMU_PER_PX</span> <span class="o">=</span> <span class="mi">9525</span>        <span class="c1"># 914400 / 96</span>
+<span class="n">x_px</span> <span class="o">=</span> <span class="n">emu_x</span> <span class="o">/</span> <span class="n">EMU_PER_PX</span>
+</code></pre></div>
+
+<p>幻灯片 12192000 × 6858000 EMU，正好是 1280 × 720 px。整页按这个画布等比缩放，坐标就不用二次换算。</p>
+<h2 id="_2">二、形状比想象中简单</h2>
+<p>这套稿子只用了 <code>rect</code>、<code>roundRect</code>、<code>ellipse</code>、<code>line</code>、<code>round2SameRect</code> 和一种自定义圆角路径。映射到 CSS 就是 <code>border-radius</code>、<code>clip-path</code> 和 SVG <code>line</code>，没有必须用 Canvas 的地方。</p>
+<h2 id="_3">三、文字是最难的部分</h2>
+<p>字号、字距、行距都能读出来，难的是两件事：</p>
+<ul>
+<li><strong>字体</strong>：稿子用的是 MiSans。我把它子集化后以 base64 内嵌，只保留用到的 259 个字符，单字重 24KB。</li>
+<li><strong>基线</strong>：PowerPoint 的行盒高度是 <code>1.2 × 字号</code>，但首行基线位置和浏览器的 <code>line-height</code> 算法并不一致。行距越大，偏差越明显。</li>
+</ul>
+<p>最后我用了一个笨办法：把每一页渲染成「纯文字 + 绿色」的图，和 PowerPoint 导出图做互相关，逐个文本框算出偏移量，再写回布局。</p>
+<h2 id="srcrect">四、图片要按 srcRect 裁</h2>
+<p>PPT 里的图片经常带裁剪和透明度。直接按框拉伸会错位，必须按 <code>srcRect</code> 先裁再缩放。另外，柔化边缘（soft edge）不是 CSS 滤镜能直接模拟的，我在生成资源时把 alpha 通道按距离羽化掉了。</p>
+<h2 id="_4">五、阴影和反射</h2>
+<ul>
+<li>阴影：形状用 <code>box-shadow</code>，图片用 <code>drop-shadow</code>，模糊半径要乘一个 0.5 左右的系数才对得上。</li>
+<li>反射：<code>-webkit-box-reflect</code> 在带 transform 的容器里表现不稳定，最后改成「复制一份、垂直翻转、用渐变遮罩」。</li>
+</ul>
+<h2 id="3d">六、3D 透视只能逼近</h2>
+<p>第 3、4 页的手机和视频是 PPT 的 3D 相机效果。CSS 只能近似：</p>
+<div class="hl"><pre><span></span><code><span class="nt">transform</span><span class="o">:</span><span class="w"> </span><span class="nt">perspective</span><span class="o">(</span><span class="nt">1900px</span><span class="o">)</span><span class="w"> </span><span class="nt">rotateX</span><span class="o">(</span><span class="nt">-3deg</span><span class="o">)</span><span class="w"> </span><span class="nt">rotateY</span><span class="o">(</span><span class="nt">-18deg</span><span class="o">);</span>
+</code></pre></div>
+
+<p>我写了个小脚本，把「透视距离」和「旋转系数」当参数网格搜索，用像素误差做目标函数，最后把误差从 38 降到 17。</p>
+<h2 id="_5">七、验收要量化</h2>
+<p>每页都截图和 PowerPoint 导出图比对，算平均通道误差。最终结果：</p>
+<table>
+<thead>
+<tr>
+<th>页面</th>
+<th>平均误差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第 1 页</td>
+<td>3.81</td>
+</tr>
+<tr>
+<td>第 2 页</td>
+<td>2.39</td>
+</tr>
+<tr>
+<td>第 3 页</td>
+<td>7.47</td>
+</tr>
+<tr>
+<td>全站平均</td>
+<td>4.90</td>
+</tr>
+</tbody>
+</table>
+<p>3、6、9 页后来被我改成了原生玻璃悬浮框，误差变大是故意的——那是设计升级，不是还原失败。</p>
+<p>完整成品在 <a href="/portfolio/">作品集</a>。</p></div>
+      <aside class="toc"><p class="toc-title">目录</p><div class="toc">
+<ul>
+<li><a href="#_1">一、先搞清楚单位</a></li>
+<li><a href="#_2">二、形状比想象中简单</a></li>
+<li><a href="#_3">三、文字是最难的部分</a></li>
+<li><a href="#srcrect">四、图片要按 srcRect 裁</a></li>
+<li><a href="#_4">五、阴影和反射</a></li>
+<li><a href="#3d">六、3D 透视只能逼近</a></li>
+<li><a href="#_5">七、验收要量化</a></li>
+</ul>
+</div>
+</aside>
+    </div>
+    <nav class="pager"><a class="pager-link prev" href="/blog/mote-design-notes/"><span>← 上一篇</span><b>Mote 浏览器：在「简洁」和「功能」之间</b></a><a class="pager-link next" href="/blog/liquid-glass-notes/"><span>下一篇 →</span><b>Liquid Glass 之后：网页里怎么做出「灵动」</b></a></nav>
+  </article>
+</main>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="f-brand">TORACHENG<span>·</span>记录设计、代码与手绘</div>
+    <div class="f-links">
+      <a href="/blog/">文章</a><a href="/portfolio/">作品集</a><a href="https://toracheng.github.io/Mote">Mote</a><a href="/feed.xml">RSS</a>
+    </div>
+    <div class="f-copy">© 2026 TorachenG · 保持好奇，持续打磨</div>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

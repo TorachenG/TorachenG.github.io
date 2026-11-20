@@ -1,24 +1,57 @@
-# 作品集 · DESIGN PORTFOLIO
+# toracheng.github.io
 
-把 `作品集.pptx` 逐页复刻成的网页版本（10 页，16:9 版式）。
+个人主页：一个静态博客 + 作品集。无框架、无后端，`git push` 即发布。
 
-## 打开方式
+## 结构
 
-双击 `index.html` 即可（无需服务器、无需联网；字体与图片均已内置）。
+```
+/                      首页（Hero + 快捷入口 + 最新文章 + 标签 + 关于）
+/blog/                 全部文章（搜索、标签筛选）
+/blog/<slug>/          文章详情（目录、代码高亮、上一篇/下一篇）
+/portfolio/            作品集（10 页，可滑动浏览）
+/assets/               博客样式、脚本、代码高亮主题
+/data/posts.json       搜索索引
+/posts/*.md            文章源文件
+/feed.xml              RSS
+```
 
-## 操作
+## 写一篇新文章
 
-- 滚轮 / 触控板 / 方向键 / PageUp·PageDown / 空格：翻页（带纵向滑动过渡动画）
-- 右侧刻度：点击跳转，悬停显示页码
-- 支持 `#s1`…`#s10` 深链接
-- 页面内右下角的 `NEXT ▶▶▶` 可直接点击进入下一页
-- 手机建议横屏观看
+1. 在 `posts/` 新建 `my-post.md`：
 
-## 说明
+```markdown
+---
+title: 标题
+date: 2026-12-01
+tags: 设计, 前端
+excerpt: 列表页显示的摘要。
+---
 
-- 非 16:9 窗口下，页面背景会跟随每一页的底色/渐变铺满屏幕，不再出现黑边
-- 版式、字号、颜色、坐标均按 PPT 原始尺寸换算（1280×720 画布等比缩放）
-- 字体为 MiSans（已子集化内嵌），与原稿一致
-- 图片素材为原 PPT 内嵌资源
+正文（Markdown）。
+```
 
-生成脚本位于同级的 `portfolio-html` 工程目录。
+2. 在工程目录执行构建：
+
+```bash
+python build_blog.py
+```
+
+3. 把生成结果同步到仓库并 push：
+
+```bash
+python deploy_blog.py
+```
+
+## 技术
+
+- Markdown → HTML：`markdown` + `codehilite` + `toc`
+- 搜索：构建时生成 `posts.json`，浏览器端做子串匹配
+- 样式：原生 CSS（Liquid Glass 风格、弹簧动效、深浅色）
+- 作品集由 `build_site.py` 从 `作品集.pptx` 生成
+
+## 本地预览
+
+```bash
+python -m http.server 8137 --directory site2
+# 打开 http://127.0.0.1:8137
+```
