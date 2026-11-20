@@ -81,7 +81,7 @@ def badge(tag):
 EMPTY_STATE = """<div class="empty-state glass reveal">
   <p class="kicker">EMPTY</p>
   <h3>还没有文章</h3>
-  <p>这里暂时是空的。写好第一篇 Markdown，导出、构建，就上线了。</p>
+  <p>这里暂时是空的。写好的文章会出现在这里。</p>
 </div>"""
 
 
