@@ -107,6 +107,20 @@ html[data-theme="light"] .links a:hover{background:rgba(20,30,60,.06)}
 html[data-theme="dark"] .theme .moon{display:none}
 html[data-theme="light"] .theme .sun{display:none}
 
+
+/* ---------- nav social icons ---------- */
+.nav-social{display:flex;align-items:center;gap:2px;margin-left:4px;padding-left:6px;border-left:1px solid var(--line)}
+.icon-btn{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  color:var(--muted);background:transparent;transition:background .25s,color .25s,transform .35s var(--spring);
+}
+.icon-btn:hover{color:var(--text);background:rgba(255,255,255,.1);transform:translateY(-2px) scale(1.06)}
+.icon-btn:active{transform:scale(.94)}
+html[data-theme="light"] .icon-btn:hover{background:rgba(20,30,60,.08)}
+@media (max-width:560px){
+  .nav-social{display:none}
+}
+
 /* ---------- layout ---------- */
 main{position:relative;z-index:1;flex:1 0 auto;width:100%}
 .hero{max-width:var(--maxw);margin:0 auto;padding:clamp(120px,16vh,180px) 28px 40px}
