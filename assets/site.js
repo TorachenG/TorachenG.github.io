@@ -65,6 +65,27 @@
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  /* ---------- stale-build guard (GitHub Pages caches HTML for 10 min) ---------- */
+  (function () {
+    var meta = doc.querySelector('meta[name="build"]');
+    if (!meta || !window.fetch) return;
+    var id = meta.getAttribute('content');
+    fetch('/version.json?cb=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (v) {
+        if (!v || !v.id || v.id === id) return;
+        var key = 'build-reload-' + v.id;
+        try {
+          if (sessionStorage.getItem(key)) return;
+          sessionStorage.setItem(key, '1');
+        } catch (e) {}
+        var url = location.pathname + location.search +
+          (location.search ? '&' : '?') + 'v=' + encodeURIComponent(v.id);
+        location.replace(url);
+      })
+      .catch(function () {});
+  })();
+
   /* ---------- pointer glow ---------- */
   doc.querySelectorAll('.action-card, .post-card, .about-card').forEach(function (el) {
     el.addEventListener('pointermove', function (e) {

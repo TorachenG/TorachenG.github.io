@@ -25,6 +25,7 @@ SITE_NAME = "Torachen"
 SITE_TITLE = "Torachen"
 SITE_DESC = "浏览器、界面与手绘。记录产品设计、工程实践与反复打磨的细节。"
 BASE_URL = "https://toracheng.github.io"
+BUILD_ID = datetime.now().strftime("%Y%m%d%H%M%S")
 PORTFOLIO_URL = "/portfolio/"
 MOTE_URL = "https://toracheng.github.io/Mote"
 
@@ -101,6 +102,7 @@ def page(title, body, path_prefix="", extra_head="", body_class=""):
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="build" content="{BUILD_ID}">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(SITE_DESC)}">
