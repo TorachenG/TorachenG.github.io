@@ -4,5 +4,11 @@
   <link>https://toracheng.github.io/</link>
   <description>浏览器、界面与手绘。记录产品设计、工程实践与反复打磨的细节。</description>
   <language>zh-CN</language>
-
+  <item>
+    <title>发布流程自检</title>
+    <link>https://toracheng.github.io/blog/__pipeline-test/</link>
+    <guid isPermaLink="true">https://toracheng.github.io/blog/__pipeline-test/</guid>
+    <pubDate>Sat, 21 Nov 2026 09:00:00 +0000</pubDate>
+    <description>这是一条自动创建又自动删除的自检文章。</description>
+  </item>
 </channel></rss>
