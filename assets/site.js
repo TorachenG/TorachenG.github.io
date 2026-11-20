@@ -129,7 +129,7 @@
         c.classList.toggle('hidden', !ok);
         if (ok) { shown++; c.classList.add('in'); }
       });
-      if (empty) empty.hidden = shown !== 0;
+      if (empty) empty.hidden = !(shown === 0 && (q || tag));
       chips.forEach(function (c) { c.classList.toggle('active', (c.getAttribute('data-tag') || '') === tag); });
     }
 
@@ -157,16 +157,28 @@
     apply();
   }
 
-  /* ---------- smooth in-page anchors ---------- */
-  doc.querySelectorAll('a[href^="#"]').forEach(function (a) {
+  /* ---------- smooth in-page anchors (also /#section) ---------- */
+  function scrollToId(id) {
+    var el = id && doc.getElementById(id);
+    if (!el) return false;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    history.replaceState(null, '', '#' + id);
+    return true;
+  }
+  doc.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
-      var id = a.getAttribute('href').slice(1);
-      var el = id && doc.getElementById(id);
-      if (el) {
-        e.preventDefault();
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        history.replaceState(null, '', '#' + id);
-      }
+      var href = a.getAttribute('href');
+      var id = href.replace(/^\/?#/, '');
+      if (!id) return;
+      if (href.charAt(0) === '/' && location.pathname !== '/') return;
+      if (scrollToId(id)) e.preventDefault();
     });
   });
+  if (location.hash.length > 1) {
+    var target = location.hash.slice(1);
+    setTimeout(function () {
+      if (!scrollToId(target)) return;
+      history.replaceState(null, '', location.pathname + location.search + '#' + target);
+    }, 120);
+  }
 })();

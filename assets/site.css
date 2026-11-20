@@ -247,6 +247,13 @@ html[data-theme="light"] .about-avatar img{border-color:rgba(255,255,255,.9);box
 #empty{padding:60px 0;text-align:center;color:var(--faint)}
 .hidden{display:none!important}
 
+
+/* ---------- empty state ---------- */
+.empty-state{grid-column:1/-1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:36px;border-radius:26px}
+.empty-state h3{font-size:20px;font-weight:600}
+.empty-state p{color:var(--muted);font-size:14px;max-width:520px;line-height:1.8}
+.empty-state .btn{margin-top:10px}
+
 /* ---------- article ---------- */
 .progress{position:fixed;left:0;top:0;height:2px;width:0;z-index:60;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 0 12px rgba(90,200,250,.7)}
 .article-wrap{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:clamp(110px,14vh,150px) 28px 20px}
