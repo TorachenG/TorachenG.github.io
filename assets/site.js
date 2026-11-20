@@ -70,17 +70,18 @@
     var meta = doc.querySelector('meta[name="build"]');
     if (!meta || !window.fetch) return;
     var id = meta.getAttribute('content');
+    if (!id) return;
+    // never reload twice for the same build, and never when already cache-busted
+    if (location.search.indexOf('v=' + id) >= 0) return;
+    var reloaded = false;
+    try { reloaded = sessionStorage.getItem('build-reload-' + id) === '1'; } catch (e) { reloaded = false; }
+    if (reloaded) return;
     fetch('/version.json?cb=' + Date.now(), { cache: 'no-store' })
       .then(function (r) { return r.json(); })
       .then(function (v) {
         if (!v || !v.id || v.id === id) return;
-        var key = 'build-reload-' + v.id;
-        try {
-          if (sessionStorage.getItem(key)) return;
-          sessionStorage.setItem(key, '1');
-        } catch (e) {}
-        var url = location.pathname + location.search +
-          (location.search ? '&' : '?') + 'v=' + encodeURIComponent(v.id);
+        try { sessionStorage.setItem('build-reload-' + v.id, '1'); } catch (e) { return; }
+        var url = location.pathname + '?v=' + encodeURIComponent(v.id);
         location.replace(url);
       })
       .catch(function () {});
