@@ -127,7 +127,7 @@ def page(title, body, path_prefix="", extra_head="", body_class=""):
   <div class="footer-inner">
     <div class="f-brand">TORACHEN</div>
     <div class="f-links">
-      <a href="/blog/">文章</a><a href="/portfolio/">作品集</a><a href="{MOTE_URL}">Mote</a>
+      <a href="/blog/">文章</a><a href="/portfolio/">作品集</a><a href="{MOTE_URL}" target="_blank" rel="noopener">Mote</a>
     </div>
     <div class="f-copy">© {datetime.now().year} Torachen</div>
   </div>
@@ -174,7 +174,7 @@ def build_home(posts):
     <h1 class="reveal" style="--i:1">把想法，<br>做成能用的东西。</h1>
     <p class="lede reveal" style="--i:2">记录软件开发、视觉设计、旅游奇遇等等~<br>欢迎来到我的博客。</p>
     <div class="actions">
-      <a class="action-card reveal" style="--i:3" href="{MOTE_URL}">
+      <a class="action-card reveal" style="--i:3" href="{MOTE_URL}" target="_blank" rel="noopener">
         <span class="ac-glow" aria-hidden="true"></span>
         <span class="ac-icon mote"><img src="/assets/mote-icon.png" alt="Mote 图标" width="30" height="30"></span>
         <span class="ac-body"><b>Mote 浏览器</b><i>纯净如纸，强大如城</i></span>

@@ -86,6 +86,17 @@
       .catch(function () {});
   })();
 
+  /* ---------- external links open in a new tab ---------- */
+  doc.querySelectorAll('a[href^="http"]').forEach(function (a) {
+    try {
+      var u = new URL(a.href, location.href);
+      if (u.host !== location.host) {
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      }
+    } catch (e) {}
+  });
+
   /* ---------- pointer glow ---------- */
   doc.querySelectorAll('.action-card, .post-card, .about-card').forEach(function (el) {
     el.addEventListener('pointermove', function (e) {
