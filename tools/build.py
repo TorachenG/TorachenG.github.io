@@ -111,8 +111,8 @@ def page(title, body, path_prefix="", extra_head="", body_class=""):
 <meta property="og:description" content="{html.escape(SITE_DESC)}">
 <meta property="og:type" content="website">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/pygments.css">
+<link rel="stylesheet" href="/assets/site.css?v={BUILD_ID}">
+<link rel="stylesheet" href="/assets/pygments.css?v={BUILD_ID}">
 <script>try{{var t=localStorage.getItem('theme');if(!t){{t=(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}}document.documentElement.dataset.theme=t;}}catch(e){{document.documentElement.dataset.theme='dark';}}</script>
 {extra_head}
 </head>
@@ -132,7 +132,7 @@ def page(title, body, path_prefix="", extra_head="", body_class=""):
     <div class="f-copy">© {datetime.now().year} Torachen</div>
   </div>
 </footer>
-<script src="/assets/site.js" defer></script>
+<script src="/assets/site.js?v={BUILD_ID}" defer></script>
 </body>
 </html>"""
 
@@ -185,7 +185,7 @@ def build_home(posts):
         <span class="ac-icon portfolio">
           <svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M8 13h8M8 16.5h5"/></svg>
         </span>
-        <span class="ac-body"><b>作品集</b><i>UI/UX · 平面视觉 · 手绘油画</i></span>
+        <span class="ac-body"><b>作品集</b><i>UI/UX · 平面视觉 · 油画</i></span>
         <span class="ac-arrow">↗</span>
       </a>
       <a class="action-card reveal" style="--i:5" href="https://github.com/TorachenG" target="_blank" rel="noopener">
@@ -418,7 +418,7 @@ def build_write():
     </div>
   </div>
 </main>"""
-    return page(SITE_NAME + " · 写文章", body, extra_head='<link rel="stylesheet" href="/assets/write.css"><script src="/assets/write.js" defer></script>')
+    return page(SITE_NAME + " · 写文章", body, extra_head='<link rel="stylesheet" href="/assets/write.css?v={BUILD_ID}"><script src="/assets/write.js?v={BUILD_ID}" defer></script>')
 
 
 def build_404():
