@@ -14,11 +14,7 @@
   if (themeBtn) {
     themeBtn.addEventListener('click', function () {
       var next = html.dataset.theme === 'dark' ? 'light' : 'dark';
-      if (doc.startViewTransition) {
-        doc.startViewTransition(function () { paintTheme(next); });
-      } else {
-        paintTheme(next);
-      }
+      paintTheme(next);
     });
   }
   var qTheme = new URLSearchParams(location.search).get('theme');
