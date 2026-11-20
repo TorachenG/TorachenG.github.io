@@ -157,6 +157,16 @@
     apply();
   }
 
+  /* ---------- home link: smooth to top on home, real navigation elsewhere ---------- */
+  doc.querySelectorAll('.links a').forEach(function (a) {
+    if (a.getAttribute('href') !== '/' || location.pathname !== '/') return;
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      history.replaceState(null, '', '/');
+    });
+  });
+
   /* ---------- smooth in-page anchors (also /#section) ---------- */
   function scrollToId(id) {
     var el = id && doc.getElementById(id);

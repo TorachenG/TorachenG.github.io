@@ -229,18 +229,21 @@ def build_blog_index(posts):
     tags = sorted({t for p in posts for t in p["tags"]})
     chips = '<button class="chip active" data-tag="">全部</button>' + "".join(
         '<button class="chip" data-tag="%s">%s</button>' % (html.escape(t), html.escape(t)) for t in tags)
-    body = f"""
-<main class="page">
-  <section class="list-head">
-    <p class="eyebrow reveal">ARCHIVE</p>
-    <h1 class="reveal" style="--i:1">全部文章</h1>
-    <p class="lede reveal" style="--i:2">共 {len(posts)} 篇 · 按时间倒序。可以搜索标题、正文或按标签筛选。</p>
+    controls = ""
+    if posts:
+        controls = f"""<p class="lede reveal" style="--i:2">共 {len(posts)} 篇 · 按时间倒序。可以搜索标题、正文或按标签筛选。</p>
     <div class="search-wrap reveal" style="--i:3">
       <svg class="s-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
       <input id="q" type="search" placeholder="搜索文章、标签或关键词…" autocomplete="off" aria-label="搜索文章">
       <kbd>⌘K</kbd>
     </div>
-    <div class="chips" id="chips">{chips}</div>
+    <div class="chips" id="chips">{chips}</div>"""
+    body = f"""
+<main class="page">
+  <section class="list-head">
+    <p class="eyebrow reveal">ARCHIVE</p>
+    <h1 class="reveal" style="--i:1">全部文章</h1>
+    {controls}
   </section>
   <div class="posts" id="posts">
     {cards}
