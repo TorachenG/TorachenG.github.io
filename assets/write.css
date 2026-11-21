@@ -16,7 +16,7 @@
   transition:flex-basis .55s cubic-bezier(.22,.9,.24,1),opacity .45s ease .08s,visibility 0s;
 }
 .editor-preview .post-card,.editor-preview .preview-body{flex:0 0 auto}
-.editor-form{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:14px;padding:22px var(--card-pad);border-radius:26px}
+.editor-form{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:14px;padding:var(--card-pad);border-radius:26px}
 .editor-preview{position:relative}
 
 /* ---------- fields ---------- */
@@ -126,7 +126,7 @@ html[data-theme="light"] .dropdown .menu button:hover{background:rgba(20,30,60,.
 /* ---------- preview ---------- */
 .preview-card{pointer-events:none}
 .preview-card .pc-title{min-height:1.35em}
-.preview-body{padding:24px var(--card-pad);border-radius:22px;border:1px solid var(--line);background:var(--glass);max-height:560px;overflow:auto}
+.preview-body{padding:var(--card-pad);border-radius:22px;border:1px solid var(--line);background:var(--glass);max-height:560px;overflow:auto}
 .preview-body.prose{font-size:15.5px}
 .preview-body h2{font-size:22px;margin:20px 0 10px}
 .preview-body h3{font-size:18px;margin:14px 0 8px}
@@ -171,5 +171,5 @@ html[data-theme="light"] .imgbar{background:rgba(255,255,255,.92)}
 }
 @media (max-width:640px){
   .field-row{grid-template-columns:1fr}
-  .editor-form{padding:16px var(--card-pad)}
+  .editor-form{padding:var(--card-pad)}
 }
