@@ -109,6 +109,15 @@ html[data-theme="dark"] .theme .moon{display:none}
 html[data-theme="light"] .theme .sun{display:none}
 
 
+
+/* ---------- inline kicker next to titles ---------- */
+.head-line{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.head-line>*{margin:0}
+.head-line .kicker{color:var(--faint)}
+.list-head>.head-line{padding-left:calc(var(--card-pad) + 1px)}
+.list-head>.head-line + .lede{margin-top:14px}
+.about-text .head-line{margin-bottom:14px}
+
 /* ---------- layout ---------- */
 main{position:relative;z-index:1;flex:1 0 auto;width:100%}
 .hero{max-width:var(--maxw);margin:0 auto;padding:clamp(120px,16vh,180px) 28px 40px}
@@ -255,7 +264,7 @@ html[data-theme="light"] .footer{background:linear-gradient(180deg,transparent,r
 
 
 /* ---------- empty state ---------- */
-.empty-state{grid-column:1/-1;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:var(--card-pad);border-radius:26px}
+.empty-state{grid-column:1/-1;display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:var(--card-pad);border-radius:26px}
 .empty-state h3{font-size:20px;font-weight:600}
 .empty-state p{color:var(--muted);font-size:14px;max-width:520px;line-height:1.8}
 .empty-state .btn{margin-top:10px}

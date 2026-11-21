@@ -80,8 +80,7 @@ def badge(tag):
 
 
 EMPTY_STATE = """<div class="empty-state glass reveal">
-  <p class="kicker">EMPTY</p>
-  <h3>还没有文章</h3>
+  <div class="head-line"><h3>还没有文章</h3><span class="kicker">/ EMPTY</span></div>
   <p>这里暂时是空的。写好的文章会出现在这里。</p>
 </div>"""
 
@@ -163,7 +162,7 @@ def build_home(posts):
         topics_block = ("""
   <section class="section" id="topics">
     <div class="section-head reveal">
-      <div><p class="kicker">TOPICS</p><h2>都在聊什么</h2></div>
+      <div><div class="head-line"><h2>都在聊什么</h2><span class="kicker">/ TOPICS</span></div></div>
     </div>
     <div class="tag-cloud reveal">%s</div>
   </section>""" % tag_html)
@@ -209,7 +208,7 @@ def build_home(posts):
 
   <section class="section" id="posts">
     <div class="section-head reveal">
-      <div><p class="kicker">LATEST</p><h2>最近写的东西</h2></div>
+      <div><div class="head-line"><h2>最近写的东西</h2><span class="kicker">/ LATEST</span></div></div>
       <a class="more" href="/blog/">全部文章 <span>→</span></a>
     </div>
     <div class="posts">
@@ -222,8 +221,7 @@ def build_home(posts):
   <section class="section about" id="about">
     <div class="about-card reveal">
       <div class="about-text">
-        <p class="kicker">ABOUT US</p>
-        <h2>兴趣使然的 Furry 控</h2>
+        <div class="head-line"><h2>兴趣使然的 Furry 控</h2><span class="kicker">/ ABOUT US</span></div>
         <div class="bio">
           <p>美术学油画系本科毕业，目前是平凡的设计类岗社畜。平时喜欢设计一些小玩意儿，偶尔接单绘画。</p>
           <p>当前坐标湖南省长沙市。爱好外出旅游（尤其是自然风景）、与列表面基、健身锻炼、胡吃海喝、看沙雕爽文短剧...</p>
@@ -259,8 +257,7 @@ def build_blog_index(posts):
     body = f"""
 <main class="page">
   <section class="list-head">
-    <p class="eyebrow reveal">ARCHIVE</p>
-    <h1 class="reveal" style="--i:1">全部文章</h1>
+    <div class="head-line reveal"><h1>全部文章</h1><span class="kicker">/ ARCHIVE</span></div>
     {controls}
   </section>
   <div class="posts" id="posts">
@@ -303,8 +300,7 @@ def build_write():
     body = f"""
 <main class="page write-page">
   <section class="list-head">
-    <p class="eyebrow reveal">WRITE</p>
-    <h1 class="reveal" style="--i:1">写文章</h1>
+    <div class="head-line reveal"><h1>写文章</h1><span class="kicker">/ WRITE</span></div>
   </section>
 
   <div class="editor" id="editorShell">
@@ -424,8 +420,7 @@ def build_write():
 def build_404():
     body = """
 <main class="page notfound">
-  <p class="eyebrow">404</p>
-  <h1>这页不见了</h1>
+  <div class="head-line"><h1>这页不见了</h1><span class="kicker">/ 404</span></div>
   <p class="lede">链接可能被移动或删除了。回首页，或者去看看作品集。</p>
   <div class="actions">
     <a class="action-card small" href="/"><span class="ac-body"><b>回到首页</b><i>Torachen</i></span><span class="ac-arrow">→</span></a>
